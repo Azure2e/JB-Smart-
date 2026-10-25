@@ -5,7 +5,7 @@ from .models import Categoria, Encomenda, ItemEncomenda, Produto
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ("nome", "emoji")
+    list_display = ("nome", "imagem")
 
 
 @admin.register(Produto)
@@ -36,3 +36,4 @@ class EncomendaAdmin(admin.ModelAdmin):
         ("Pagamento e Estado", {"fields": ("metodo_pagamento", "estado", "total", "criada")}),
         ("Notas", {"fields": ("notas",), "classes": ("collapse",)}),
     )
+

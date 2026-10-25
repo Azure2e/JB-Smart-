@@ -6,7 +6,8 @@ from django.db import models
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=80)
-    emoji = models.CharField(max_length=4, default="🛒")
+    imagem = models.ImageField(upload_to="categorias/", blank=True, null=True)
+    emoji = models.CharField(max_length=4, default="🛒", blank=True)
 
     class Meta:
         ordering = ["nome"]
@@ -80,5 +81,6 @@ class ItemEncomenda(models.Model):
     @property
     def subtotal(self):
         return self.preco_unit * self.quantidade
+
 
 
