@@ -5,8 +5,9 @@
 {% for e in encomendas %}
 <div class="box">
   <div class="row slim"><b class="grow">#{{ e.pk }} · {{ e.criada|date:"d/m/Y H:i" }}</b><span class="chip on">{{ e.get_estado_display }}</span></div>
-  {% for i in e.itens.all %}<div class="muted">{{ i.quantidade }}× {{ i.produto.nome }} — {{ i.subtotal }} €</div>{% endfor %}
-  <div class="total"><span>{{ e.get_modo_display }}</span><span>{{ e.total }} €</span></div>
+  {% for i in e.itens.all %}<div class="muted">{{ i.quantidade }}× {{ i.produto.nome }} — {{ i.subtotal }} R$</div>{% endfor %}
+  <div class="total"><span>{{ e.get_modo_display }}</span><span>{{ e.total }} R$</span></div>
 </div>
 {% empty %}<p class="muted">Ainda não fez nenhuma encomenda.</p>{% endfor %}
 {% endblock %}
+

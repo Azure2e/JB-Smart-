@@ -29,8 +29,8 @@
     </div>
     <h3>{{ p.nome }}</h3>
     <div class="price">
-      <strong>{{ p.preco_final }} €</strong>
-      {% if p.promocao %}<s>{{ p.preco }} €</s>{% endif %}
+      <strong>{{ p.preco_final }} R$</strong>
+      {% if p.promocao %}<s>{{ p.preco }} R$</s>{% endif %}
     </div>
     {% if p.stock > 0 %}
       <form method="post" action="{% url 'adicionar' p.pk %}">{% csrf_token %}
@@ -46,3 +46,4 @@
 </div>
 
 {% endblock %}
+

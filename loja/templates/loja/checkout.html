@@ -7,10 +7,10 @@
   {% for i in itens %}
   <div class="row slim">
     <span class="grow">{{ i.quantidade }}× {{ i.produto.nome }}</span>
-    <b>{{ i.subtotal }} €</b>
+    <b>{{ i.subtotal }} R$</b>
   </div>
   {% endfor %}
-  <div class="total"><span>Total</span><span>{{ total }} €</span></div>
+  <div class="total"><span>Total</span><span>{{ total }} R$</span></div>
 </div>
 
 <form method="post" class="form">{% csrf_token %}
@@ -51,3 +51,4 @@ document.querySelectorAll('input[name="metodo_pagamento"]').forEach(radio => {
 });
 </script>
 {% endblock %}
+

@@ -4,19 +4,20 @@
 <h2>🛒 O meu carrinho</h2>
 {% for i in itens %}
 <div class="row">
-  <div class="grow"><strong>{{ i.produto.nome }}</strong><small class="muted">{{ i.produto.preco_final }} € / un.</small></div>
+  <div class="grow"><strong>{{ i.produto.nome }}</strong><small class="muted">{{ i.produto.preco_final }} R$ / un.</small></div>
   <form method="post" action="{% url 'atualizar' i.produto.pk %}" class="qty">{% csrf_token %}
     <input type="number" name="quantidade" min="0" max="{{ i.produto.stock }}" value="{{ i.quantidade }}">
     <button class="btn small alt">OK</button>
   </form>
-  <b class="sub">{{ i.subtotal }} €</b>
+  <b class="sub">{{ i.subtotal }} R$</b>
   <form method="post" action="{% url 'remover' i.produto.pk %}">{% csrf_token %}<button class="link" title="Remover">✕</button></form>
 </div>
 {% empty %}
 <p class="muted">O carrinho está vazio. <a href="{% url 'lista' %}">Ver produtos</a></p>
 {% endfor %}
 {% if itens %}
-<div class="total"><span>Total</span><span>{{ total }} €</span></div>
+<div class="total"><span>Total</span><span>{{ total }} R$</span></div>
 <a class="btn full" href="{% url 'checkout' %}">Finalizar compra →</a>
 {% endif %}
 {% endblock %}
+
