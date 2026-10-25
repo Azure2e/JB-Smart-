@@ -21,7 +21,7 @@ class Produto(models.Model):
     preco = models.DecimalField("Preço (R$)", max_digits=8, decimal_places=2)
     promocao = models.PositiveSmallIntegerField("Desconto (%)", default=0)
     stock = models.PositiveIntegerField(default=0)
-    imagem = models.ImageField(upload_to="produtos/", blank=True)
+    imagem = models.ImageField(upload_to="produtos/", blank=True, storage=None)
     ativo = models.BooleanField(default=True)
 
     class Meta:
@@ -80,4 +80,5 @@ class ItemEncomenda(models.Model):
     @property
     def subtotal(self):
         return self.preco_unit * self.quantidade
+
 
