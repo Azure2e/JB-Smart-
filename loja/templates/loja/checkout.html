@@ -1,0 +1,53 @@
+{% extends "loja/base.html" %}
+{% block title %}Finalizar compra{% endblock %}
+{% block content %}
+<h2>Finalizar compra</h2>
+
+<div class="box">
+  {% for i in itens %}
+  <div class="row slim">
+    <span class="grow">{{ i.quantidade }}× {{ i.produto.nome }}</span>
+    <b>{{ i.subtotal }} €</b>
+  </div>
+  {% endfor %}
+  <div class="total"><span>Total</span><span>{{ total }} €</span></div>
+</div>
+
+<form method="post" class="form">{% csrf_token %}
+  <h3>Dados pessoais</h3>
+  {{ form.nome_completo.label_tag }} {{ form.nome_completo }}
+  {{ form.email.label_tag }} {{ form.email }}
+  {{ form.telefone.label_tag }} {{ form.telefone }}
+
+  <h3 style="margin-top:20px">Entrega</h3>
+  {{ form.modo }}
+  {{ form.morada.label_tag }} {{ form.morada }}
+  {{ form.codigo_postal.label_tag }} {{ form.codigo_postal }}
+  {{ form.cidade.label_tag }} {{ form.cidade }}
+
+  <h3 style="margin-top:20px">Pagamento</h3>
+  {{ form.metodo_pagamento }}
+
+  <div id="pix-info" class="box" style="margin-top:12px;display:none;">
+    <strong>Pagamento por PIX</strong>
+    <p>Após confirmar, irá receber os dados para transferir o valor total.</p>
+  </div>
+
+  {{ form.notas.label_tag }} {{ form.notas }}
+
+  {% if form.errors %}
+    <div class="msg error">{{ form.errors }}</div>
+  {% endif %}
+
+  <p class="muted" style="margin-top:12px">Os seus dados são usados apenas para processar a encomenda.</p>
+  <button class="btn full">Confirmar encomenda segura</button>
+</form>
+
+<script>
+document.querySelectorAll('input[name="metodo_pagamento"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.getElementById('pix-info').style.display = radio.value === 'pix' && radio.checked ? 'block' : 'none';
+  });
+});
+</script>
+{% endblock %}

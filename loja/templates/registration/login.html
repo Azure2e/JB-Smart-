@@ -1,0 +1,9 @@
+{% extends "loja/base.html" %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+<div class="box narrow">
+  <h2>Entrar</h2>
+  <form method="post" class="form">{% csrf_token %}{{ form.as_p }}<button class="btn full">Entrar</button></form>
+  <p class="muted">Ainda não tem conta? <a href="{% url 'registo' %}">Registar</a></p>
+</div>
+{% endblock %}

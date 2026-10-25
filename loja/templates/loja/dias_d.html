@@ -1,0 +1,48 @@
+{% extends "loja/base.html" %}
+{% block title %}DIAS D – JB Smart{% endblock %}
+{% block content %}
+
+<section class="dia-d-hero">
+  <div class="dia-d-badge">📅 DIAS D</div>
+  <h1>Dias Especiais JB Smart</h1>
+  <p class="dia-d-sub">Os melhores dias para comprar com ofertas exclusivas.</p>
+  <a href="{% url 'lista' %}" class="btn" style="margin-top:16px;">Voltar à loja</a>
+</section>
+
+<div class="box" style="text-align:center;margin:24px 0;">
+  <h2>O que são os DIAS D?</h2>
+  <p>Dias especiais com descontos reforçados, produtos frescos e condições únicas.</p>
+  <div class="dia-d-features">
+    <div><strong>🏷️ Ofertas exclusivas</strong><br><span class="muted">Só nos DIAS D</span></div>
+    <div><strong>🛒 Stock limitado</strong><br><span class="muted">Aproveite enquanto há</span></div>
+    <div><strong>🚚 Entrega prioritária</strong><br><span class="muted">Nos dias especiais</span></div>
+  </div>
+</div>
+
+<h2 style="margin-top:32px;">Produtos dos DIAS D</h2>
+<div class="grid">
+  {% for p in produtos %}
+  <article class="card">
+    <div class="img">
+      {% if p.imagem %}<img src="{{ p.imagem.url }}" alt="{{ p.nome }}">{% else %}<span>{{ p.categoria.emoji }}</span>{% endif %}
+      {% if p.promocao %}<span class="tag">-{{ p.promocao }}%</span>{% endif %}
+    </div>
+    <h3>{{ p.nome }}</h3>
+    <div class="price">
+      <strong>{{ p.preco_final }} €</strong>
+      {% if p.promocao %}<s>{{ p.preco }} €</s>{% endif %}
+    </div>
+    {% if p.stock > 0 %}
+      <form method="post" action="{% url 'adicionar' p.pk %}">{% csrf_token %}
+        <button class="btn full">Adicionar</button>
+      </form>
+    {% else %}
+      <button class="btn full off" disabled>Esgotado</button>
+    {% endif %}
+  </article>
+  {% empty %}
+  <p class="muted" style="grid-column:1/-1;text-align:center;padding:40px 0;">Novos DIAS D a caminho. Volte em breve!</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

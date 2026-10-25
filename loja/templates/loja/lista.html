@@ -1,0 +1,78 @@
+{% extends "loja/base.html" %}
+{% block title %}Produtos{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>As suas compras, <em>mais inteligentes</em>.</h1>
+  <p>Frescos, promoções e entrega rápida — tudo num só sítio.</p>
+  <form class="search" method="get">
+    <input name="q" value="{{ q }}" placeholder="Pesquisar produtos, marcas…">
+    <button class="btn" type="submit">Pesquisar</button>
+  </form>
+</section>
+
+<div class="chips">
+  <a class="chip {% if not cat and not so_promo %}on{% endif %}" href="{% url 'lista' %}">Todos</a>
+  <a class="chip" href="{% url 'dias_d' %}">📅 DIAS D</a>
+  {% for c in categorias %}
+    <a class="chip {% if cat == c.pk|stringformat:'s' %}on{% endif %}" href="?cat={{ c.pk }}">{{ c.emoji }} {{ c.nome }}</a>
+  {% endfor %}
+</div>
+
+<div class="grid" id="productsGrid">
+  <!-- Skeleton loading (aparece brevemente) -->
+  <div class="skeleton-card" id="skeleton">
+    <div class="sk-img"></div>
+    <div class="sk-line"></div>
+    <div class="sk-line short"></div>
+    <div class="sk-btn"></div>
+  </div>
+  <div class="skeleton-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-btn"></div></div>
+  <div class="skeleton-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-btn"></div></div>
+  <div class="skeleton-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-btn"></div></div>
+
+  {% for p in produtos %}
+  <article class="card product-card" style="opacity:0;">
+    <div class="img">
+      {% if p.imagem %}
+        <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+      {% else %}
+        <span>{{ p.categoria.emoji }}</span>
+      {% endif %}
+      {% if p.promocao %}<span class="tag">-{{ p.promocao }}%</span>{% endif %}
+    </div>
+    <h3>{{ p.nome }}</h3>
+    <div class="price">
+      <strong>{{ p.preco_final }} €</strong>
+      {% if p.promocao %}<s>{{ p.preco }} €</s>{% endif %}
+    </div>
+    {% if p.stock > 0 %}
+      <form method="post" action="{% url 'adicionar' p.pk %}">{% csrf_token %}
+        <button class="btn full">Adicionar ao carrinho</button>
+      </form>
+    {% else %}
+      <button class="btn full off" disabled>Esgotado</button>
+    {% endif %}
+  </article>
+  {% empty %}
+  <p class="muted" style="grid-column:1/-1;text-align:center;padding:40px 0;">Nenhum produto encontrado.</p>
+  {% endfor %}
+</div>
+
+<script>
+// Animação de carregamento dos produtos
+document.addEventListener('DOMContentLoaded', () => {
+  const skeletons = document.querySelectorAll('.skeleton-card');
+  const cards = document.querySelectorAll('.product-card');
+
+  setTimeout(() => {
+    skeletons.forEach(s => s.style.display = 'none');
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.classList.add('fade-up');
+      }, i * 60);
+    });
+  }, 650);
+});
+</script>
+{% endblock %}

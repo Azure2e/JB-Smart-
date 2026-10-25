@@ -1,0 +1,56 @@
+{% extends "loja/base.html" %}
+{% block title %}DIA D – JB Smart{% endblock %}
+{% block content %}
+
+<section class="dia-d-hero">
+  <div class="dia-d-badge">🔥 DIA D</div>
+  <h1>O Grande Dia chegou!</h1>
+  <p class="dia-d-sub">Ofertas especiais só hoje. Aproveite antes que acabe.</p>
+  <div class="dia-d-timer">
+    <span>Ofertas válidas por tempo limitado</span>
+  </div>
+  <a href="{% url 'lista' %}?promo=1" class="btn" style="margin-top:16px;">Ver todas as promoções</a>
+</section>
+
+<div class="box" style="text-align:center;margin:24px 0;">
+  <h2>Porque escolher o DIA D?</h2>
+  <div class="dia-d-features">
+    <div><strong>🏷️ Descontos até 40%</strong><br><span class="muted">Em produtos selecionados</span></div>
+    <div><strong>🚚 Entrega rápida</strong><br><span class="muted">No mesmo dia em muitas zonas</span></div>
+    <div><strong>💳 Pagamento seguro</strong><br><span class="muted">PIX, MB WAY e mais</span></div>
+  </div>
+</div>
+
+<h2 style="margin-top:32px;">Produtos em destaque no DIA D</h2>
+<div class="grid">
+  {% for p in produtos %}
+  <article class="card">
+    <div class="img">
+      {% if p.imagem %}<img src="{{ p.imagem.url }}" alt="{{ p.nome }}">{% else %}<span>{{ p.categoria.emoji }}</span>{% endif %}
+      {% if p.promocao %}<span class="tag">-{{ p.promocao }}%</span>{% endif %}
+    </div>
+    <h3>{{ p.nome }}</h3>
+    <div class="price">
+      <strong>{{ p.preco_final }} €</strong>
+      {% if p.promocao %}<s>{{ p.preco }} €</s>{% endif %}
+    </div>
+    {% if p.stock > 0 %}
+      <form method="post" action="{% url 'adicionar' p.pk %}">{% csrf_token %}
+        <button class="btn full">Adicionar</button>
+      </form>
+    {% else %}
+      <button class="btn full off" disabled>Esgotado</button>
+    {% endif %}
+  </article>
+  {% empty %}
+  <p class="muted" style="grid-column:1/-1;text-align:center;">Novas ofertas a caminho. Volte em breve!</p>
+  {% endfor %}
+</div>
+
+<div class="box center" style="margin-top:24px;">
+  <h3>Não perca o DIA D</h3>
+  <p>As melhores ofertas do JB Smart, só hoje.</p>
+  <a href="{% url 'lista' %}" class="btn">Ir para a loja</a>
+</div>
+
+{% endblock %}

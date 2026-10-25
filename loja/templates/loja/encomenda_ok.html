@@ -1,0 +1,23 @@
+{% extends "loja/base.html" %}
+{% block title %}Encomenda confirmada{% endblock %}
+{% block content %}
+<div class="box center">
+  <div class="big">✅</div>
+  <h2>Encomenda #{{ enc.pk }} confirmada!</h2>
+  <p>Obrigado, <b>{{ enc.nome_completo }}</b>!</p>
+  <p>Total: <b>{{ enc.total }} €</b> · {{ enc.get_modo_display }}</p>
+  <p>Pagamento: <b>{{ enc.get_metodo_pagamento_display }}</b></p>
+
+  {% if enc.metodo_pagamento == "pix" %}
+  <div class="box" style="text-align:left;margin-top:16px;">
+    <h3>Pague com PIX</h3>
+    <p>Transfira o valor de <b>{{ enc.total }} €</b> para:</p>
+    <p><strong>Nome:</strong> {{ pix_name }}</p>
+    <p><strong>Chave PIX:</strong> <code style="background:#f0f0f0;padding:4px 8px;border-radius:6px;">{{ pix_key }}</code></p>
+    <p class="muted">Após o pagamento, a encomenda será processada.</p>
+  </div>
+  {% endif %}
+
+  <a class="btn" href="{% url 'encomendas' %}" style="margin-top:16px;">Ver as minhas encomendas</a>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load static %}{
+  "name": "JB Smart – Supermercado",
+  "short_name": "JB Smart",
+  "description": "As suas compras, mais inteligentes. Seja bem-vindo ao JB SMART.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4faf6",
+  "theme_color": "#16a34a",
+  "orientation": "portrait-primary",
+  "lang": "pt-PT",
+  "dir": "ltr",
+  "categories": ["shopping", "food"],
+  "icons": [
+    {
+      "src": "{% static 'loja/img/icon.svg' %}",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "prefer_related_applications": false
+}

@@ -1,0 +1,10 @@
+{% extends "loja/base.html" %}
+{% block title %}Offline{% endblock %}
+{% block content %}
+<div class="box center">
+  <div class="big">📡</div>
+  <h2>Está offline</h2>
+  <p class="muted">Verifique a sua ligação à internet e tente novamente.</p>
+  <a class="btn" href="{% url 'lista' %}">Tentar novamente</a>
+</div>
+{% endblock %}
